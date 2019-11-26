@@ -17,6 +17,9 @@ d = 0.2
 n = 0.02
 s = 0.3
 a = 0.5
+x = 0.2
+eta = 0.3
+c = 0.4
 
 index = pd.DataFrame(list(range(0,101)))
 
@@ -31,11 +34,7 @@ trace_1 = go.Scatter(x = k[0], y = k[0] ** a,
 
 layout = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
                     hovermode = 'closest',
-                    updatemenus=[dict(type="buttons",
-                                    buttons=[dict(label="Play",
-                                            method="animate",
-                                            args=[None])])
-                                            ]                   )
+                    )
 
 
 fig = go.Figure(data = [trace_1], layout = layout)
@@ -104,12 +103,12 @@ app.layout = html.Div([
                 ]),
             html.Div([
                 html.Div(
-                    html.P('d:'),
+                    html.P('d:     '),
                     style={'display': 'inline-block'}),
                 html.Div(
                     dcc.Input(id='d', type='number', value = d, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('n:'),
@@ -117,7 +116,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='n', type='number', value = n, step=0.01),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('s:'),
@@ -125,15 +124,15 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='s', type='number', value = s, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                                                
+                style={'width': '15%', 'display': 'inline-block'}),                                                
             html.Div([
                 html.Div(
-                    html.P('a:'),
+                    html.P('alpha:'),
                     style={'display': 'inline-block'}),
                 html.Div(
                     dcc.Input(id='a', type='number', value = a, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                    
+                style={'width': '15%', 'display': 'inline-block'}),                    
         html.Div([
             html.Div([
                 dcc.Graph(id = 'plot', figure = fig)
@@ -149,9 +148,9 @@ app.layout = html.Div([
                 style={'width': '48%', 'float':'right', 'display': 'inline-block'})
                     ])
         ]),
-        dcc.Tab(label='Solow + Exogenous', children=[
+        dcc.Tab(label='Solow-Swan + Tech Progress', children=[
         html.Div([
-            html.H1("Solow-Swan Model")
+            html.H1("Solow-Swan + Technological Progress")
                 ]),
             html.Div([
                 html.Div(
@@ -160,7 +159,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='d2', type='number', value = d, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('n:'),
@@ -168,7 +167,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='n2', type='number', value = n, step=0.01),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('s:'),
@@ -176,15 +175,23 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='s2', type='number', value = s, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                                                
+                style={'width': '15%', 'display': 'inline-block'}),                                                
             html.Div([
                 html.Div(
-                    html.P('a:'),
+                    html.P('alpha:'),
                     style={'display': 'inline-block'}),
                 html.Div(
                     dcc.Input(id='a2', type='number', value = a, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                    
+                style={'width': '15%', 'display': 'inline-block'}),
+            html.Div([
+                html.Div(
+                    html.P('x:'),
+                    style={'display': 'inline-block'}),
+                html.Div(
+                    dcc.Input(id='x2', type='number', value = x, step=0.05),
+                    style={'display': 'inline-block'})],
+                style={'width': '15%', 'display': 'inline-block'}),                    
         html.Div([
             html.Div([
                 dcc.Graph(id = 'plot_2', figure = fig)
@@ -200,9 +207,9 @@ app.layout = html.Div([
                 style={'width': '48%', 'float':'right', 'display': 'inline-block'})
                     ])
         ]),
-        dcc.Tab(label='Modelo AK', children=[
+        dcc.Tab(label='AK Model', children=[
         html.Div([
-            html.H1("Modelo AK")
+            html.H1("AK Model")
                 ]),
             html.Div([
                 html.Div(
@@ -211,15 +218,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='d3', type='number', value = d, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
-            html.Div([
-                html.Div(
-                    html.P('n:'),
-                    style={'display': 'inline-block'}),
-                html.Div(
-                    dcc.Input(id='n3', type='number', value = n, step=0.01),
-                    style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('s:'),
@@ -227,15 +226,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='s3', type='number', value = s, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                                                
-            html.Div([
-                html.Div(
-                    html.P('a:'),
-                    style={'display': 'inline-block'}),
-                html.Div(
-                    dcc.Input(id='a3', type='number', value = a, step=0.05),
-                    style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                    
+                style={'width': '15%', 'display': 'inline-block'}),                                                
         html.Div([
             html.Div([
                 dcc.Graph(id = 'plot_3', figure = fig)
@@ -251,9 +242,9 @@ app.layout = html.Div([
                 style={'width': '48%', 'float':'right', 'display': 'inline-block'})
                     ])
         ]),
-        dcc.Tab(label='Endogenous Growth', children=[
+        dcc.Tab(label='R&D (Romer)', children=[
         html.Div([
-            html.H1("Solow-Swan Model")
+            html.H1("R&D (Romer)")
                 ]),
             html.Div([
                 html.Div(
@@ -262,7 +253,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='d4', type='number', value = d, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('n:'),
@@ -270,7 +261,7 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='n4', type='number', value = n, step=0.01),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),
+                style={'width': '15%', 'display': 'inline-block'}),
             html.Div([
                 html.Div(
                     html.P('s:'),
@@ -278,15 +269,31 @@ app.layout = html.Div([
                 html.Div(
                     dcc.Input(id='s4', type='number', value = s, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                                                
+                style={'width': '15%', 'display': 'inline-block'}),                                                
             html.Div([
                 html.Div(
-                    html.P('a:'),
+                    html.P('alpha:'),
                     style={'display': 'inline-block'}),
                 html.Div(
                     dcc.Input(id='a4', type='number', value = a, step=0.05),
                     style={'display': 'inline-block'})],
-                style={'width': '12.5%', 'display': 'inline-block'}),                    
+                style={'width': '15%', 'display': 'inline-block'}),
+            html.Div([
+                html.Div(
+                    html.P('eta:'),
+                    style={'display': 'inline-block'}),
+                html.Div(
+                    dcc.Input(id='eta4', type='number', value = eta, step=0.05),
+                    style={'display': 'inline-block'})],
+                style={'width': '15%', 'display': 'inline-block'}),                    
+            html.Div([
+                html.Div(
+                    html.P('c:'),
+                    style={'display': 'inline-block'}),
+                html.Div(
+                    dcc.Input(id='c4', type='number', value = c, step=0.05),
+                    style={'display': 'inline-block'})],
+                style={'width': '15%', 'display': 'inline-block'}),                    
         html.Div([
             html.Div([
                 dcc.Graph(id = 'plot_4', figure = fig)
@@ -321,7 +328,11 @@ app.css.append_css({
                 Output('plot_3', 'figure'),
                 Output('plot3_3', 'figure'),
                 Output('plot2_3', 'figure'),
-                Output('plot4_3', 'figure'),],
+                Output('plot4_3', 'figure'),
+                Output('plot_4', 'figure'),
+                Output('plot3_4', 'figure'),
+                Output('plot2_4', 'figure'),
+                Output('plot4_4', 'figure'),],
                 [Input('d', 'value'), 
                 Input('n', 'value'),
                 Input('s', 'value'),
@@ -330,14 +341,19 @@ app.css.append_css({
                 Input('n2', 'value'),
                 Input('s2', 'value'),
                 Input('a2', 'value'),
-                Input('s3', 'value'),
+                Input('x2', 'value'),
                 Input('d3', 'value'),
+                Input('s3', 'value'),
+                Input('d4', 'value'),
+                Input('n4', 'value'),
                 Input('s4', 'value'),
-                Input('d4', 'value')],
+                Input('a4', 'value'),
+                Input('eta4', 'value'),
+                Input('c4', 'value'),],
                 )
 
-def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,input9,input10,
-    input11,input12,
+def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
+    input9,input10,input11,input12,input13,input14,input15,input16,input17,
 ):
         # updating the plot
 
@@ -359,38 +375,16 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,input9
         
     layout1 = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
                     hovermode = 'closest',
-                    updatemenus=[
-                            dict(type="buttons",
-                            buttons=[dict(label="Play",
-                                        method="animate",
-                                        args=[None])])
-                                        ])
+                    )
     layout2 = go.Layout(title = 'gy, gk',
                     hovermode = 'closest',
-                    updatemenus=[
-                            dict(type="buttons",
-                            buttons=[dict(label="Play",
-                                        method="animate",
-                                        args=[None])])
-                                        ])
-        
+                    )    
     layout3 = go.Layout(title = 'Taxas de crescimento',
                     hovermode = 'closest',
-                    updatemenus=[
-                            dict(type="buttons",
-                            buttons=[dict(label="Play",
-                                        method="animate",
-                                        args=[None])])
-                                        ])
-
+                    )
     layout4 = go.Layout(title = 'log(Y/L)',
                     hovermode = 'closest',
-                    updatemenus=[
-                            dict(type="buttons",
-                            buttons=[dict(label="Play",
-                                        method="animate",
-                                        args=[None])])
-                                        ])
+                    )
 
     kz = equal
     yz = kz**a
@@ -501,12 +495,13 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,input9
     n2 = input6
     s2 = input7
     alpha2 = input8
+    x2 = input9
 
-    K = 1
-    A_0 = 1
+    K = 0.2
+    A_0 = 0.2
     #alpha2 = 0.5
-    L = 1
-    x2 = 0.02
+    L = 0.2
+    #x2 = 0.02
     #s2 = 0.2
     #d2 = 0.2
     A = A_0 * np.exp(x2*i)
@@ -590,13 +585,14 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,input9
 ###
 
 
-    s3 = input9
     d3 = input10
+    s3 = input11
+    
 
     n3 = 0
 
-    K3 = 1
-    A3 = 1
+    K3 = 0.2
+    A3 = 0.2
     X3 = A3 * K3
 
     df_3 = pd.DataFrame()
@@ -671,14 +667,127 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,input9
                     mode='lines',
                     name='df(x)'))
 
-    print(df_3)
+    ###
+    ### R&D
+    ###
 
-    return fig, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11, fig12
+    d4 = input12
+    n4 = input13
+    s4 = input14
+    alpha4 = input15
+    eta4 = input16
+    c4 = input17
+  
+    df_4 = pd.DataFrame()
+
+    K = 0.01
+    A = 0.2
+    #alpha2 = 0.5
+    Ly = 1
+    Lr = 1
+    L = Ly + Lr
+    nr4 = n4
+    #x2 = 0.02
+    #s2 = 0.2
+    #d2 = 0.2
+    Y = (K ** alpha4) * ((A * Ly) ** (1-alpha4))
+
+    for i in range(0,100):
+        L = L + (n4*L)
+        Lr = Lr + (nr4*Lr)
+        Ly = L - Lr
+        A = A + ((c4)*((A)**(eta4))*(Lr))
+        K = K + ((s4*Y) - (d4*K))
+        Y = (K ** alpha4) * ((A * Ly) ** (1-alpha4))
+        ytil = (Y/(A*L))
+        ktil = (K/(A*L))
+
+        df_4 = df_4.append(pd.DataFrame([s4,d4,Y,A,K,ytil,ktil]).transpose(),ignore_index=True)
+
+      
+    df_4.columns = ['s','d','Y','A','K','ytil','ktil']
+
+    g_df_4 = pd.DataFrame()
+
+    for i in range(1,len(df_4)):
+        gY = (df_4['Y'][i]-df_4['Y'][i-1])/df_4['Y'][i]
+        gA = (df_4['A'][i]-df_4['A'][i-1])/df_4['A'][i]
+        gK = (df_4['K'][i]-df_4['K'][i-1])/df_4['K'][i]
+
+        g_df_4 = g_df_4.append(pd.DataFrame([gY,gA,gK]).transpose(),ignore_index=True)
+    
+    g_df_4.columns = ['gY','gA','gK']
+
+    print(g_df_4)
+
+    trace_13 = go.Scatter(x = df_4['K'], y = df_4['Y'],
+                        name = 'f(x)',
+                        line = dict(width = 2,
+                                    color = 'rgb(229, 151, 50)'))
+
+    fig13 = go.Figure(data = [trace_13],
+        layout = layout1
+        )
+
+    fig13.add_trace(go.Scatter(x=df_4['K'], y=s4*df_4['Y'],
+                    mode='lines',
+                    name='sf(x)'))
+        
+    fig13.add_trace(go.Scatter(x=df_4['K'], y=(d4+n4)*(df_4['K']),
+                    mode='lines',
+                    name='df(x)'))
+
+
+    trace_14 = go.Scatter(x = df_4['K'], y = s4*df_4['A'],
+                        name = 'f(x)',
+                        line = dict(width = 2,
+                                    color = 'rgb(229, 151, 50)'))
+
+    fig14 = go.Figure(data = [trace_14],
+        layout = layout1
+        )
+
+    fig14.add_trace(go.Scatter(x=df_4['K'], y=df_4['d']+n4,
+                    mode='lines',
+                    name='df(x)'))
+
+    trace_15 = go.Scatter(x = df_4['ktil'], y = df_4['ytil'],
+                        name = 'f(x)',
+                        line = dict(width = 2,
+                                    color = 'rgb(229, 151, 50)'))
+
+    fig15 = go.Figure(data = [trace_15],
+        layout = layout1
+        )
+
+    fig15.add_trace(go.Scatter(x=df_4['ktil'], y=s4*df_4['ytil'],
+                    mode='lines',
+                    name='sf(x)'))
+        
+    fig15.add_trace(go.Scatter(x=df_4['ktil'], y=(d4+n4)*(df_4['ktil']),
+                    mode='lines',
+                    name='df(x)'))
+
+
+    trace_16 = go.Scatter(x = df_4['ktil'], y = s4*df_4['A'],
+                        name = 'f(x)',
+                        line = dict(width = 2,
+                                    color = 'rgb(229, 151, 50)'))
+
+    fig16 = go.Figure(data = [trace_16],
+        layout = layout1
+        )
+
+    fig16.add_trace(go.Scatter(x=df_4['ktil'], y=df_4['d']+n4,
+                    mode='lines',
+                    name='df(x)'))
+
+    print(df_4)
+
+    return fig, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11, fig12, fig13, fig14, fig15, fig16
     
 server = app.server
 
     # Step 6. Add the server clause
 if __name__ == '__main__':
     app.run_server()
-
-
