@@ -497,24 +497,21 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
     alpha2 = input8
     x2 = input9
 
-    K = 0.2
-    A_0 = 0.2
-    #alpha2 = 0.5
-    L = 0.2
-    #x2 = 0.02
-    #s2 = 0.2
-    #d2 = 0.2
-    A = A_0 * np.exp(x2*i)
-    Y = (K ** alpha2) * ((A * L) ** (1-alpha2))
+    K = 1
+    A_0 = 1
+    L = 1
+
 
     for i in range(0,100):
+
         A = A_0 * np.exp(x2*i)
-        K = K + ((s2*Y) - (d2*K))
-        L = L + (n2*L)
         Y = (K ** alpha2) * ((A * L) ** (1-alpha2))
         ytil = (Y/(A*L))
-        ktil = (K/(A*L))
+        ktil = (K/(A*L))    
         df = df.append(pd.DataFrame([s2,d2,Y,A,K,ytil,ktil]).transpose(),ignore_index=True)
+        K = K + ((s2*Y) - (d2*K))
+        L = L + (n2*L)
+       
 
     df.columns = ['s','d','Y','A','K','ytil','ktil']
     
@@ -562,7 +559,7 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
                     mode='lines',
                     name='sf(x)'))
         
-    fig7.add_trace(go.Scatter(x=df['ktil'], y=(d2+n2)*(df['ktil']),
+    fig7.add_trace(go.Scatter(x=df['ktil'], y=(d2+n2+x2)*(df['ktil']),
                     mode='lines',
                     name='df(x)'))
 
@@ -579,6 +576,7 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
     fig8.add_trace(go.Scatter(x=df['ktil'], y=df['d']+n,
                     mode='lines',
                     name='df(x)'))
+    #print('df:',df)
 
 ###
 ### AK Model
@@ -699,13 +697,14 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
         A = A + ((c4)*((A)**(eta4))*(Lr))
         K = K + ((s4*Y) - (d4*K))
         Y = (K ** alpha4) * ((A * Ly) ** (1-alpha4))
+        gA2 = (((c4)*((A)**(eta4))*(Lr))/(A))
         ytil = (Y/(A*L))
         ktil = (K/(A*L))
 
-        df_4 = df_4.append(pd.DataFrame([s4,d4,Y,A,K,ytil,ktil]).transpose(),ignore_index=True)
+        df_4 = df_4.append(pd.DataFrame([s4,d4,gA2,Y,A,K,ytil,ktil]).transpose(),ignore_index=True)
 
       
-    df_4.columns = ['s','d','Y','A','K','ytil','ktil']
+    df_4.columns = ['s','d','gA2','Y','A','K','ytil','ktil']
 
     g_df_4 = pd.DataFrame()
 
@@ -718,7 +717,7 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
     
     g_df_4.columns = ['gY','gA','gK']
 
-    print(g_df_4)
+    #print(g_df_4)
 
     trace_13 = go.Scatter(x = df_4['K'], y = df_4['Y'],
                         name = 'f(x)',
@@ -764,7 +763,7 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
                     mode='lines',
                     name='sf(x)'))
         
-    fig15.add_trace(go.Scatter(x=df_4['ktil'], y=(d4+n4)*(df_4['ktil']),
+    fig15.add_trace(go.Scatter(x=df_4['ktil'], y=(d4+n4+df_4['gA2'])*(df_4['ktil']),
                     mode='lines',
                     name='df(x)'))
 
@@ -782,7 +781,7 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
                     mode='lines',
                     name='df(x)'))
 
-    print(df_4)
+
 
     return fig, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11, fig12, fig13, fig14, fig15, fig16
     
@@ -791,3 +790,5 @@ server = app.server
     # Step 6. Add the server clause
 if __name__ == '__main__':
     app.run_server()
+
+
