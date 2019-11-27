@@ -375,15 +375,19 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
         
     layout1 = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
                     hovermode = 'closest',
+                    xaxis_title="k",
                     )
     layout2 = go.Layout(title = 'gy, gk',
                     hovermode = 'closest',
+                    xaxis_title="t",
                     )    
     layout3 = go.Layout(title = 'Taxas de crescimento',
                     hovermode = 'closest',
+                    xaxis_title="k",
                     )
     layout4 = go.Layout(title = 'log(Y/L)',
                     hovermode = 'closest',
+                    xaxis_title="t",
                     )
 
     kz = equal
@@ -448,11 +452,11 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
 
     fig.add_trace(go.Scatter(x=k[0], y=s*(k[0]**a),
                     mode='lines',
-                    name='sf(x)'))
+                    name='s * f(x)'))
         
     fig.add_trace(go.Scatter(x=k[0], y=(d+n)*(k[0]),
                     mode='lines',
-                    name='df(x)'))
+                    name='(d + n) * k'))
 
     fig.layout.update(
         showlegend=False,
@@ -514,68 +518,89 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
        
 
     df.columns = ['s','d','Y','A','K','ytil','ktil']
+
+    layout5 = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
+                    hovermode = 'closest',
+                    xaxis_title="K",
+                    )
+    layout6 = go.Layout(title = 'gy, gk',
+                    hovermode = 'closest',
+                    xaxis_title="K",
+                    xaxis_range=[1,3],
+                    yaxis_range=[0,2],
+                    )    
+    layout7 = go.Layout(title = 'Taxas de crescimento',
+                    hovermode = 'closest',
+                    xaxis_title="¨k",
+                    )
+    layout8 = go.Layout(title = 'log(Y/L)',
+                    hovermode = 'closest',
+                    xaxis_title="¨k",
+                    #xaxis_range=[0.45,0.5],
+                    #yaxis_range=[0,5],                    
+                    )
     
     trace_5 = go.Scatter(x = df['K'], y = df['Y'],
-                        name = 'f(x)',
+                        name = 'Y',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig5 = go.Figure(data = [trace_5],
-        layout = layout1
+        layout = layout5
         )
 
     fig5.add_trace(go.Scatter(x=df['K'], y=s*df['Y'],
                     mode='lines',
-                    name='sf(x)'))
+                    name='sY'))
         
     fig5.add_trace(go.Scatter(x=df['K'], y=(d2+n2)*(df['K']),
                     mode='lines',
-                    name='df(x)'))
+                    name='(d+n)*K'))
 
 
     trace_6 = go.Scatter(x = df['K'], y = s2*df['A'],
-                        name = 'f(x)',
+                        name = 'sA',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig6 = go.Figure(data = [trace_6],
-        layout = layout1
+        layout = layout6
         )
 
     fig6.add_trace(go.Scatter(x=df['K'], y=df['d']+n,
                     mode='lines',
-                    name='df(x)'))
+                    name='d + n'))
 
     trace_7 = go.Scatter(x = df['ktil'], y = df['ytil'],
-                        name = 'f(x)',
+                        name = 'ÿ',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig7 = go.Figure(data = [trace_7],
-        layout = layout1
+        layout = layout7
         )
 
     fig7.add_trace(go.Scatter(x=df['ktil'], y=s*df['ytil'],
                     mode='lines',
-                    name='sf(x)'))
+                    name='sÿ'))
         
     fig7.add_trace(go.Scatter(x=df['ktil'], y=(d2+n2+x2)*(df['ktil']),
                     mode='lines',
-                    name='df(x)'))
+                    name='(d+n+x)*ÿ'))
 
 
     trace_8 = go.Scatter(x = df['ktil'], y = s2*df['A'],
-                        name = 'f(x)',
+                        name = 'sA',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig8 = go.Figure(data = [trace_8],
-        layout = layout1
+        layout = layout8
         )
 
     fig8.add_trace(go.Scatter(x=df['ktil'], y=df['d']+n,
                     mode='lines',
-                    name='df(x)'))
+                    name='d+n'))
     #print('df:',df)
 
 ###
@@ -604,66 +629,83 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
 
     df_3.columns = ['s','d','X','A','K','xtil','ktil']
 
+    layout9 = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
+                    hovermode = 'closest',
+                    xaxis_title="K",
+                    )
+    layout10 = go.Layout(title = 'gy, gk',
+                    hovermode = 'closest',
+                    xaxis_title="K",
+                    )    
+    layout11 = go.Layout(title = 'Taxas de crescimento',
+                    hovermode = 'closest',
+                    xaxis_title="¨k",
+                    )
+    layout12 = go.Layout(title = 'log(Y/L)',
+                    hovermode = 'closest',
+                    xaxis_title="¨k",
+                    )
+
     trace_9 = go.Scatter(x = df_3['X'], y = df_3['K'],
-                        name = 'f(x)',
+                        name = 'X',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig9 = go.Figure(data = [trace_9],
-        layout = layout1
+        layout = layout9
         )
 
     fig9.add_trace(go.Scatter(x=df_3['K'], y=s3*df_3['X'],
                     mode='lines',
-                    name='sf(x)'))
+                    name='sX'))
         
     fig9.add_trace(go.Scatter(x=df_3['K'], y=(d3+n3)*(df_3['K']),
                     mode='lines',
-                    name='df(x)'))
+                    name='dX'))
 
     trace_10 = go.Scatter(x = df_3['K'], y = s3*df_3['A'],
-                        name = 'f(x)',
+                        name = 'sA',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig10 = go.Figure(data = [trace_10],
-        layout = layout1
+        layout = layout10
         )
 
-    fig10.add_trace(go.Scatter(x=df_3['K'], y=df_3['d']+n,
+    fig10.add_trace(go.Scatter(x=df_3['K'], y=df_3['d']+n3,
                     mode='lines',
-                    name='df(x)'))    
+                    name='d'))    
 
     trace_11 = go.Scatter(x = df_3['ktil'], y = df_3['xtil'],
-                        name = 'f(x)',
+                        name = '¨x',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig11 = go.Figure(data = [trace_11],
-        layout = layout1
+        layout = layout11
         )
 
     fig11.add_trace(go.Scatter(x=df_3['ktil'], y=s3*df_3['xtil'],
                     mode='lines',
-                    name='sf(x)'))
+                    name='s¨x'))
         
     fig11.add_trace(go.Scatter(x=df_3['ktil'], y=(d3+n3)*(df_3['xtil']),
                     mode='lines',
-                    name='df(x)'))
+                    name='d¨x'))
 
 
     trace_12 = go.Scatter(x = df_3['ktil'], y = s3*df_3['A'],
-                        name = 'f(x)',
+                        name = 'sA',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig12 = go.Figure(data = [trace_12],
-        layout = layout1
+        layout = layout12
         )
 
     fig12.add_trace(go.Scatter(x=df_3['ktil'], y=df_3['d']+n3,
                     mode='lines',
-                    name='df(x)'))
+                    name='d'))
 
     ###
     ### R&D
@@ -719,69 +761,87 @@ def update_figure(input1,input2,input3,input4,input5,input6,input7,input8,
 
     #print(g_df_4)
 
+    layout13 = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
+                    hovermode = 'closest',
+                    xaxis_title="K",
+                    )
+    layout14 = go.Layout(title = 'gy, gk',
+                    hovermode = 'closest',
+                    xaxis_title="K",
+                    )    
+    layout15 = go.Layout(title = 'Taxas de crescimento',
+                    hovermode = 'closest',
+                    xaxis_title="¨k",
+                    )
+    layout16 = go.Layout(title = 'log(Y/L)',
+                    hovermode = 'closest',
+                    xaxis_title="¨k",
+                    )
+
+
     trace_13 = go.Scatter(x = df_4['K'], y = df_4['Y'],
-                        name = 'f(x)',
+                        name = 'Y',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig13 = go.Figure(data = [trace_13],
-        layout = layout1
+        layout = layout13
         )
 
     fig13.add_trace(go.Scatter(x=df_4['K'], y=s4*df_4['Y'],
                     mode='lines',
-                    name='sf(x)'))
+                    name='sY'))
         
     fig13.add_trace(go.Scatter(x=df_4['K'], y=(d4+n4)*(df_4['K']),
                     mode='lines',
-                    name='df(x)'))
+                    name='(d+n)K'))
 
 
     trace_14 = go.Scatter(x = df_4['K'], y = s4*df_4['A'],
-                        name = 'f(x)',
+                        name = 'sA',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig14 = go.Figure(data = [trace_14],
-        layout = layout1
+        layout = layout14
         )
 
     fig14.add_trace(go.Scatter(x=df_4['K'], y=df_4['d']+n4,
                     mode='lines',
-                    name='df(x)'))
+                    name='d+n'))
 
     trace_15 = go.Scatter(x = df_4['ktil'], y = df_4['ytil'],
-                        name = 'f(x)',
+                        name = 'ÿ',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig15 = go.Figure(data = [trace_15],
-        layout = layout1
+        layout = layout15
         )
 
     fig15.add_trace(go.Scatter(x=df_4['ktil'], y=s4*df_4['ytil'],
                     mode='lines',
-                    name='sf(x)'))
+                    name='sÿ'))
         
     fig15.add_trace(go.Scatter(x=df_4['ktil'], y=(d4+n4+df_4['gA2'])*(df_4['ktil']),
                     mode='lines',
-                    name='df(x)'))
+                    name='(d+n+ga)¨k'))
 
 
     trace_16 = go.Scatter(x = df_4['ktil'], y = s4*df_4['A'],
-                        name = 'f(x)',
+                        name = 'sA',
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
 
     fig16 = go.Figure(data = [trace_16],
-        layout = layout1
+        layout = layout16
         )
 
     fig16.add_trace(go.Scatter(x=df_4['ktil'], y=df_4['d']+n4,
                     mode='lines',
-                    name='df(x)'))
+                    name='d+n'))
 
-
+    #print(df_4)
 
     return fig, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11, fig12, fig13, fig14, fig15, fig16
     
